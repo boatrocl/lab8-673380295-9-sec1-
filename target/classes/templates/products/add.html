@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>เพิ่มสินค้าใหม่ - Lab 8 Product Shop</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>เพิ่มสินค้าใหม่</h1>
+        <form th:action="@{/products/save}" th:object="${product}" method="post">
+            <label>ชื่อสินค้า</label>
+            <input type="text" th:field="*{name}" required placeholder="เช่น 673380295-9 SEC1_หูฟัง (ต้องมีรหัสนักศึกษา+Section)" />
+            
+            <label>ราคา</label>
+            <input type="number" step="0.01" th:field="*{price}" required/>
+            
+            <label>หมวดหมู่</label>
+            <input type="text" th:field="*{category}" />
+            
+            <label>ประเภทส่วนลด</label>
+            <select th:field="*{discountType}">
+                <option value="NONE">ไม่มีส่วนลด (NONE)</option>
+                <option value="MEMBER">สมาชิก 10% (MEMBER)</option>
+                <option value="SEASONAL">เทศกาล 20% (SEASONAL)</option>
+            </select>
+
+            <fieldset>
+                <legend>รายละเอียดสินค้า (ProductDetail - 1:1)</legend>
+                <label>คำอธิบาย</label>
+                <textarea th:field="*{productDetail.description}"></textarea>
+                <label>การรับประกัน</label>
+                <input type="text" th:field="*{productDetail.warranty}" />
+                <label>น้ำหนัก (กก.)</label>
+                <input type="number" step="0.01" th:field="*{productDetail.weight}" />
+                <label>ขนาด (กว้าง x ยาว x สูง)</label>
+                <input type="text" th:field="*{productDetail.dimensions}" />
+                <label>ผลิตจากประเทศ</label>
+                <input type="text" th:field="*{productDetail.manufacturedCountry}" />
+            </fieldset>
+
+            <button type="submit" class="submit-btn">บันทึกสินค้าใหม่</button>
+        </form>
+        <a class="back-link" th:href="@{/products}">&larr; กลับไปหน้ารายการสินค้า</a>
+    </div>
+</body>
+</html>

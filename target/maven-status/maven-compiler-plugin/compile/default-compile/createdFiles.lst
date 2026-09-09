@@ -1,1 +1,15 @@
+com\example\lab8shop\service\ProductServiceImpl.class
+com\example\lab8shop\model\Review.class
 com\example\lab8shop\Lab8ProductshopApplication.class
+com\example\lab8shop\strategy\NoDiscountStrategy.class
+com\example\lab8shop\service\ProductService.class
+com\example\lab8shop\controller\ProductController.class
+com\example\lab8shop\model\Product.class
+com\example\lab8shop\strategy\SeasonalSaleStrategy.class
+com\example\lab8shop\repository\ReviewRepository.class
+com\example\lab8shop\model\Review$Builder.class
+com\example\lab8shop\strategy\DiscountStrategyResolver.class
+com\example\lab8shop\model\ProductDetail.class
+com\example\lab8shop\strategy\DiscountStrategy.class
+com\example\lab8shop\repository\ProductRepository.class
+com\example\lab8shop\strategy\MemberDiscountStrategy.class

@@ -1,25 +1,11 @@
 package com.example.lab8shop.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Entity หลักของ Lab 8: Product
- * - ความสัมพันธ์ 1:1 กับ ProductDetail (Product เป็นฝั่ง Owning Side ถือ FK product_detail_id)
- * - ความสัมพันธ์ 1:N กับ Review (Product เป็นฝั่ง Inverse Side, mappedBy = "product")
- *
- * ชื่อ Class/Table ตั้งใจให้เรียบง่ายตาม Requirement ของ Lab
- * (นักศึกษาควรตั้งชื่อ "product" ตัวอย่างในฐานข้อมูลจริงให้มีรหัสนักศึกษา + Section ตาม Checklist ท้ายเอกสาร)
- */
 @Entity
 @Table(name = "products")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Product {
 
     @Id
@@ -34,38 +20,52 @@ public class Product {
 
     private String category;
 
-    /**
-     * เก็บประเภทส่วนลดเป็น String ("NONE", "MEMBER", "SEASONAL")
-     * เพื่อให้ DiscountStrategyResolver (Strategy Pattern จาก Lab 7) เลือก Strategy ที่เหมาะสมตอน runtime
-     * -> สอดคล้องกับหลัก OCP (Open/Closed Principle): เพิ่มส่วนลดแบบใหม่ได้โดยไม่ต้องแก้โค้ด Product/Service เดิม
-     */
     @Column(name = "discount_type")
     private String discountType;
 
-    /**
-     * 1:1 Product <-> ProductDetail
-     * Product เป็นฝั่ง "Owning Side" เพราะมี @JoinColumn (คอลัมน์ product_detail_id อยู่ในตาราง products)
-     * cascade = ALL: บันทึก/ลบ Product แล้ว ProductDetail จะถูกจัดการตามไปด้วยอัตโนมัติ
-     * orphanRemoval = true: ถ้าเอา ProductDetail ออกจาก Product แล้ว Hibernate จะลบแถวนั้นทิ้งจากฐานข้อมูล
-     */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_detail_id", referencedColumnName = "id")
     private ProductDetail productDetail;
 
-    /**
-     * 1:N Product -> Review
-     * Product เป็นฝั่ง "Inverse Side" (mappedBy ชี้ไปที่ field "product" ใน Review.java)
-     * Review เป็นฝั่ง "Owning Side" ที่แท้จริง เพราะมี FK product_id อยู่ในตาราง reviews
-     */
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
-    /**
-     * Helper method สำหรับ bidirectional relationship
-     * ช่วยให้ทั้งสองฝั่ง (Product.reviews และ Review.product) sync กันเสมอ
-     * ป้องกันบัค "FK เป็น null" ที่พบบ่อยเวลา save ความสัมพันธ์สองทิศทาง
-     */
+    // Constructors
+    public Product() {}
+
+    public Product(Long id, String name, Double price, String category, String discountType, ProductDetail productDetail, List<Review> reviews) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.discountType = discountType;
+        this.productDetail = productDetail;
+        this.reviews = reviews;
+    }
+
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+
+    public String getDiscountType() { return discountType; }
+    public void setDiscountType(String discountType) { this.discountType = discountType; }
+
+    public ProductDetail getProductDetail() { return productDetail; }
+    public void setProductDetail(ProductDetail productDetail) { this.productDetail = productDetail; }
+
+    public List<Review> getReviews() { return reviews; }
+    public void setReviews(List<Review> reviews) { this.reviews = reviews; }
+
+    // Helper methods for bidirectional relationship
     public void addReview(Review review) {
         this.reviews.add(review);
         review.setProduct(this);

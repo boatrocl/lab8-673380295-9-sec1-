@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ยืนยันการลบ - Lab 8 Product Shop</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>ยืนยันการลบสินค้า</h1>
+        <p style="font-size: 18px;">คุณต้องการลบสินค้า <strong style="color: #c62828;" th:text="${product.name}"></strong> ใช่หรือไม่?</p>
+        <p style="background-color: #fff3cd; padding: 10px; border-left: 4px solid #ffc107;">
+            <strong>คำเตือน:</strong> การลบจะทำการ Cascade ลบ <strong>ProductDetail</strong> และ <strong>Reviews</strong> ทั้งหมดที่ผูกกับสินค้านี้ออกไปด้วย
+        </p>
+        
+        <form th:action="@{/products/delete/{id}(id=${product.id})}" method="post" style="margin-top: 20px;">
+            <button type="submit" class="btn btn-delete" style="padding: 10px 20px; font-size: 16px;">ยืนยันการลบ</button>
+            <a class="back-link" th:href="@{/products}" style="margin-left: 15px;">ยกเลิก</a>
+        </form>
+    </div>
+</body>
+</html>
