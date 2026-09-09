@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ฟอร์มสินค้า - Lab 8 Product Shop</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; max-width: 600px; }
+        label { display: block; margin-top: 12px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 6px; margin-top: 4px; box-sizing: border-box; }
+        fieldset { margin-top: 20px; padding: 15px; }
+        button { margin-top: 20px; padding: 8px 20px; background-color: #1565c0; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        a { display: inline-block; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<h1 th:text="${product.id != null} ? 'แก้ไขสินค้า' : 'เพิ่มสินค้าใหม่'"></h1>
+
+<form th:if="${product.id == null}" th:action="@{/products/save}" th:object="${product}" method="post">
+    <div th:replace="~{::productFields}"></div>
+    <button type="submit">บันทึกสินค้าใหม่</button>
+</form>
+
+<form th:if="${product.id != null}" th:action="@{/products/update/{id}(id=${product.id})}" th:object="${product}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div th:replace="~{::productFields}"></div>
+    <button type="submit">บันทึกการแก้ไข</button>
+</form>
+
+<div th:fragment="productFields">
+    <label>ชื่อสินค้า</label>
+    <input type="text" th:field="*{name}" required
+           placeholder="เช่น 64010000_Sec1_เสื้อยืด (ต้องมีรหัสนักศึกษา+Section)" />
+
+    <label>ราคา</label>
+    <input type="number" step="0.01" th:field="*{price}" required />
+
+    <label>หมวดหมู่</label>
+    <input type="text" th:field="*{category}" />
+
+    <label>ประเภทส่วนลด</label>
+    <select th:field="*{discountType}">
+        <option value="NONE">ไม่มีส่วนลด (NONE)</option>
+        <option value="MEMBER">สมาชิก 10% (MEMBER)</option>
+        <option value="SEASONAL">เทศกาล 20% (SEASONAL)</option>
+    </select>
+
+    <fieldset>
+        <legend>รายละเอียดสินค้า (ProductDetail - 1:1)</legend>
+        <label>คำอธิบาย</label>
+        <textarea th:field="*{productDetail.description}"></textarea>
+        <label>การรับประกัน</label>
+        <input type="text" th:field="*{productDetail.warranty}" />
+        <label>น้ำหนัก (กก.)</label>
+        <input type="number" step="0.01" th:field="*{productDetail.weight}" />
+        <label>ขนาด (กว้าง x ยาว x สูง)</label>
+        <input type="text" th:field="*{productDetail.dimensions}" />
+        <label>ผลิตจากประเทศ</label>
+        <input type="text" th:field="*{productDetail.manufacturedCountry}" />
+    </fieldset>
+</div>
+
+<a th:href="@{/products}">&larr; กลับไปหน้ารายการสินค้า</a>
+
+</body>
+</html>

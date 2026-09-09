@@ -1,0 +1,14 @@
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\controller\ProductController.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\Lab8ProductshopApplication.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\model\Product.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\model\ProductDetail.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\model\Review.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\repository\ProductRepository.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\repository\ReviewRepository.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\service\ProductService.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\service\ProductServiceImpl.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\strategy\DiscountStrategy.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\strategy\DiscountStrategyResolver.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\strategy\MemberDiscountStrategy.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\strategy\NoDiscountStrategy.java
+C:\Users\ROG G16\Downloads\lab8-productshop\lab8-productshop\src\main\java\com\example\lab8shop\strategy\SeasonalSaleStrategy.java

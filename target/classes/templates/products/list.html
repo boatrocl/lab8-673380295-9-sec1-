@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>รายการสินค้า - Lab 8 Product Shop</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 15px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; vertical-align: top; }
+        th { background-color: #f2f2f2; }
+        .btn { padding: 4px 10px; text-decoration: none; border-radius: 4px; margin-right: 4px; font-size: 13px; }
+        .btn-add { background-color: #2e7d32; color: white; }
+        .btn-edit { background-color: #1565c0; color: white; }
+        .btn-delete { background-color: #c62828; color: white; }
+        .review-item { font-size: 12px; margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+
+<h1>รายการสินค้าทั้งหมด</h1>
+<a class="btn btn-add" th:href="@{/products/add}">+ เพิ่มสินค้าใหม่</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th><th>ชื่อสินค้า</th><th>ราคา</th><th>หมวดหมู่</th><th>ส่วนลด</th>
+        <th>รายละเอียดสินค้า (1:1)</th><th>รีวิว (1:N)</th><th>จัดการ</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.category}"></td>
+        <td th:text="${product.discountType}"></td>
+        <td>
+            <div th:if="${product.productDetail != null}">
+                <div><strong>คำอธิบาย:</strong> <span th:text="${product.productDetail.description}"></span></div>
+                <div><strong>รับประกัน:</strong> <span th:text="${product.productDetail.warranty}"></span></div>
+                <div><strong>น้ำหนัก:</strong> <span th:text="${product.productDetail.weight}"></span></div>
+                <div><strong>ขนาด:</strong> <span th:text="${product.productDetail.dimensions}"></span></div>
+                <div><strong>ผลิตจาก:</strong> <span th:text="${product.productDetail.manufacturedCountry}"></span></div>
+            </div>
+            <div th:if="${product.productDetail == null}">- ไม่มีข้อมูล -</div>
+        </td>
+        <td>
+            <div th:if="${#lists.isEmpty(product.reviews)}">- ยังไม่มีรีวิว -</div>
+            <div class="review-item" th:each="review : ${product.reviews}">
+                ⭐ <span th:text="${review.rating}"></span>/5
+                โดย <span th:text="${review.reviewer}"></span>: <span th:text="${review.comment}"></span>
+                (<span th:text="${review.reviewDate}"></span>)
+            </div>
+            <details>
+                <summary>+ เพิ่มรีวิว</summary>
+                <form th:action="@{/products/{id}/reviews/add(id=${product.id})}" method="post" style="margin-top:6px;">
+                    <input type="text" name="reviewer" placeholder="ชื่อผู้รีวิว" required style="width:100%;margin-bottom:4px;" />
+                    <input type="number" name="rating" min="1" max="5" placeholder="คะแนน 1-5" required style="width:100%;margin-bottom:4px;" />
+                    <textarea name="comment" placeholder="ความคิดเห็น" style="width:100%;margin-bottom:4px;"></textarea>
+                    <input type="date" name="reviewDate" required style="width:100%;margin-bottom:4px;" />
+                    <button type="submit" style="padding:4px 10px;">บันทึกรีวิว</button>
+                </form>
+            </details>
+        </td>
+        <td>
+            <a class="btn btn-edit" th:href="@{/products/edit/{id}(id=${product.id})}">แก้ไข</a>
+            <a class="btn btn-delete" th:href="@{/products/delete/{id}(id=${product.id})}"
+               onclick="return confirm('ยืนยันการลบสินค้านี้?');">ลบ</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
